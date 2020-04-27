@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Practik JS</title>
+</head>
+<body>
+	                                 <!-- табличка которая добавляет, удаляет и редактирует работников  -->
+                                 
+<section class="main">
+	<table id="table">
+	<tr>
+		<td>Name:</td>
+		<td>Surname:</td>
+		
+	</tr>
+</table>
+
+<input type="text" id="input" placeholder="Your name?">
+<input type="text" id="surname" placeholder="Your surname?">
+<button id="btn">Add new section</button>
+</section>
+
+
+<style>	
+td {
+	width: 200px;
+	height: 50px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: #93E2D9;
+	cursor: pointer;
+	text-align: center;
+	font-family: cursive;
+	
+}
+table {
+	margin: 0 auto;
+}
+.main, input {
+	text-align: center;
+	border-radius: 5px;
+}
+</style>
+
+<script>
+let table = document.getElementById('table');
+let input = document.getElementsByTagName('input');
+let button = document.getElementById('btn');
+
+    table.addEventListener('click', addInp);
+    button.addEventListener('click', addData);
+
+
+function addInp(event) {
+
+    let td = event.target.closest('td');
+    let inp= document.createElement('input');
+        if (td.textContent !== 'Delete') {
+                inp.type = 'text';
+                inp.placeholder = 'write';
+                inp.value = td.textContent;
+                td.textContent = '';
+                td.appendChild(inp);
+
+    table.removeEventListener('click', addInp);
+    inp.focus();
+
+    inp.addEventListener('blur', function(event) {
+        td.textContent = inp.value;
+        table.addEventListener('click', addInp);
+});
+
+inp.addEventListener('keydown', function(event) {
+        if (event.keyCode == 13) {
+                td.textContent = inp.value;
+            table.addEventListener('click', addInp);
+        }
+});
+} else {
+        let ul = event.target.closest('table');
+        let tr = event.target.closest('tr');
+        table.removeChild(tr);
+        }
+}
+
+function addData(event) {
+    event.preventDefault();
+        let tr = document.createElement('tr');
+            for (let i = 0; i < input.length; i++) {
+                let td = document.createElement('td');
+                    td.textContent = input[i].value;
+                    tr.appendChild(td);
+                    input[i].value = '';
+            }
+    let td = document.createElement('td');
+        td.textContent = 'Delete';
+        table.appendChild(tr);
+        tr.appendChild(td);
+        td.style.backgroundColor = '#E293B9';
+} 	 
+</script>
+</body>
+</html>
